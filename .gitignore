@@ -1,0 +1,22 @@
+node_modules
+.next
+out
+dist
+build
+.env
+.env.local
+.env*.local
+next-env.d.ts
+*.tsbuildinfo
+.DS_Store
+src/generated
+
+# Documentos internos de referência (docx/xlsx do cliente) — não vão pro repo.
+docs/
+
+# Dumps de banco — dados, não código.
+backups/
+
+# Roteiros de teste manual (scratch).
+TEST_ROTEIRO_COMPLETO.md
+TEST_ROTEIRO_UI.md

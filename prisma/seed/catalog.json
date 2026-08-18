@@ -1,0 +1,673 @@
+{
+  "areas": [
+    {
+      "code": "architecture-innovation",
+      "sigla": "ARQ",
+      "name": "Architecture & Innovation",
+      "ownerName": "José Ronaldo"
+    },
+    {
+      "code": "compliance-governance",
+      "sigla": "CGJ",
+      "name": "Compliance & Governance",
+      "ownerName": "Cássia Bueno"
+    },
+    {
+      "code": "customer-success",
+      "sigla": "CSU",
+      "name": "Customer Success",
+      "ownerName": "Renato Adriano"
+    },
+    {
+      "code": "engineering-dev-z",
+      "sigla": "EDZ",
+      "name": "Engineering & Technology (Dev Z)",
+      "ownerName": "Mauricio Souza"
+    },
+    {
+      "code": "engineering-dev-open",
+      "sigla": "EDO",
+      "name": "Engineering & Technology (Dev Open)",
+      "ownerName": "Roberta Hoffman"
+    },
+    {
+      "code": "engineering-qa",
+      "sigla": "EQA",
+      "name": "Engineering & Technology (QA)",
+      "ownerName": "Felipe Santos"
+    },
+    {
+      "code": "engineering-infra-z",
+      "sigla": "EIZ",
+      "name": "Engineering & Technology (Infra Z)",
+      "ownerName": "Elcio Carnelossi"
+    },
+    {
+      "code": "financial-administrative",
+      "sigla": "FIN",
+      "name": "Financial & Administrative",
+      "ownerName": "Milena Tamburro"
+    },
+    {
+      "code": "fpa",
+      "sigla": "FPA",
+      "name": "FP&A",
+      "ownerName": "David Panza"
+    },
+    {
+      "code": "infrastructure-security",
+      "sigla": "INS",
+      "name": "Infrastructure and Security",
+      "ownerName": "Fábio Ogawa"
+    },
+    {
+      "code": "marketing",
+      "sigla": "MKT",
+      "name": "Marketing",
+      "ownerName": "Paloma Costa"
+    },
+    {
+      "code": "people-performance",
+      "sigla": "PEP",
+      "name": "People & Performance",
+      "ownerName": "Marcella Prado"
+    },
+    {
+      "code": "pmo",
+      "sigla": "PMO",
+      "name": "PMO",
+      "ownerName": "Carolina Schuch"
+    },
+    {
+      "code": "pre-sales",
+      "sigla": "PRV",
+      "name": "Pre-Sales",
+      "ownerName": "Edison Mello"
+    },
+    {
+      "code": "sales-revenue",
+      "sigla": "SAL",
+      "name": "Sales & Revenue",
+      "ownerName": "Thiago Costa"
+    },
+    {
+      "code": "service-delivery-pedro",
+      "sigla": "SDP",
+      "name": "Service Delivery — Pedro Vara",
+      "ownerName": "Pedro Vara"
+    },
+    {
+      "code": "service-delivery-thiago",
+      "sigla": "SDT",
+      "name": "Service Delivery — Thiago Machado",
+      "ownerName": "Thiago Machado"
+    },
+    {
+      "code": "software-delivery",
+      "sigla": "SWD",
+      "name": "Software Delivery",
+      "ownerName": "Waldeir Crepaldi"
+    },
+    {
+      "code": "transversal-gestao",
+      "sigla": "TRG",
+      "name": "Transversal (Gestão)",
+      "ownerName": "Vinícius Costa"
+    }
+  ],
+  "processes": [
+    {
+      "areaCode": "architecture-innovation",
+      "code": "POP-ARQ-001",
+      "name": "Arquitetura de Solução de Software",
+      "objective": "Projetar os fundamentos de um produto de software: limites operacionais, restrições, protocolos de comunicação e interfaces com o ecossistema onde irá operar.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "architecture-innovation",
+      "code": "POP-ARQ-002",
+      "name": "Planejamento de Construção",
+      "objective": "Planejar a implementação do que foi projetado, definindo entidades e especificando processos.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "architecture-innovation",
+      "code": "POP-ARQ-003",
+      "name": "Planejamento de Testes e Ensaios",
+      "objective": "Planejar e especificar os casos de teste necessários para verificar a adequação do que foi construído contra o projetado.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "architecture-innovation",
+      "code": "POP-ARQ-004",
+      "name": "Bibliografia Técnica de Produtos",
+      "objective": "Elaborar e manter a documentação técnica que descreve o produto perante o cliente ou usuário.",
+      "wave": "ONDA_3"
+    },
+    {
+      "areaCode": "compliance-governance",
+      "code": "POP-CGJ-001",
+      "name": "Gestão do Ciclo de Vida Contratual",
+      "objective": "Fluxo completo da solicitação interna ao arquivo pós-encerramento: elaboração, revisão, negociação, aprovação por alçada, assinatura, obrigações, aditamentos, renovação e distrato. Inclui SLAs do Jurídico e integração com Monday.",
+      "wave": "ONDA_1"
+    },
+    {
+      "areaCode": "compliance-governance",
+      "code": "POP-CGJ-002",
+      "name": "Atendimento e Triagem de Demandas Jurídicas",
+      "objective": "Definir canais de solicitação, critérios de priorização (urgência × impacto), SLAs por tipo de demanda e regras de escalonamento para escritórios externos.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "compliance-governance",
+      "code": "POP-CGJ-003",
+      "name": "Resposta a Incidentes de Dados Pessoais (LGPD)",
+      "objective": "Identificação, contenção, avaliação de risco ao titular, comunicação à ANPD (72h), notificação a titulares, registro no ROPA e medidas corretivas.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "compliance-governance",
+      "code": "POP-CGJ-004",
+      "name": "Monitoramento de Compliance e Controles Internos",
+      "objective": "Rotina de verificação do cumprimento das políticas publicadas: checklist periódico por área, tratamento de não conformidades e relatório à Diretoria.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "compliance-governance",
+      "code": "POP-CGJ-005",
+      "name": "Gestão do Contencioso e Provisões",
+      "objective": "Acompanhamento de processos judiciais/administrativos da citação ao encerramento: classificação de risco, provisões contábeis, escritórios externos e lições aprendidas.",
+      "wave": "ONDA_3"
+    },
+    {
+      "areaCode": "customer-success",
+      "code": "POP-CSU-001",
+      "name": "Capacitação Interna nos Produtos Eccox",
+      "objective": "Desenvolver e manter atualizado o conhecimento da equipe nos produtos Eccox para atender os clientes.",
+      "wave": "ONDA_3"
+    },
+    {
+      "areaCode": "customer-success",
+      "code": "POP-CSU-002",
+      "name": "Treinamento de Clientes nos Produtos Eccox",
+      "objective": "Desenvolver e manter material único de treinamento de clientes, atualizado com as novas features dos produtos.",
+      "wave": "ONDA_3"
+    },
+    {
+      "areaCode": "customer-success",
+      "code": "POP-CSU-003",
+      "name": "Voice of Customer e Melhoria Contínua (NPS/UX)",
+      "objective": "Escutar clientes (NPS, pesquisas, análise de uso/UX) e transformar em melhorias e novas features, incorporando as melhores práticas de mercado.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "customer-success",
+      "code": "POP-CSU-004",
+      "name": "Gestão da Documentação de Produtos",
+      "objective": "Garantir documentação de produtos atualizada, acessível e organizada para uso interno e externo.",
+      "wave": "ONDA_3"
+    },
+    {
+      "areaCode": "customer-success",
+      "code": "POP-CSU-005",
+      "name": "Renovação de Contratos e Retenção (D-90)",
+      "objective": "Garantir renovação de contratos com alertas antecipados (D-90/D-60/D-30), plano de ação por conta e negociação, protegendo receita recorrente.",
+      "wave": "ONDA_1"
+    },
+    {
+      "areaCode": "customer-success",
+      "code": "POP-CSU-006",
+      "name": "Jornada do Cliente e Health Score",
+      "objective": "Gerir a jornada Onboarding → Adoção → Expansão → Renovação com Health Score por cliente e ação para contas em alerta.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "engineering-dev-z",
+      "code": "POP-EDZ-001",
+      "name": "Engenharia de Software — Alta Plataforma (Z)",
+      "objective": "Padronizar o ciclo de desenvolvimento Z: análise técnica, codificação, revisão e testes com evidências, garantindo qualidade e rastreabilidade conforme os padrões da organização.",
+      "wave": "ONDA_1"
+    },
+    {
+      "areaCode": "engineering-dev-z",
+      "code": "POP-EDZ-002",
+      "name": "Correção de Defeitos (Bugs) de Clientes",
+      "objective": "Fluxo padronizado de análise, reprodução, correção, validação e disponibilização de soluções para defeitos reportados por clientes.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "engineering-qa",
+      "code": "POP-EQA-001",
+      "name": "Gestão de Releases de Software (Z + Open)",
+      "objective": "Planejar, consolidar, homologar e disponibilizar versões controladas dos produtos, organizando demandas, correções e evoluções por plataforma.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "engineering-dev-open",
+      "code": "POP-EDO-001",
+      "name": "Desenvolvimento e Evolução de Software (Open)",
+      "objective": "Planejar, desenvolver, validar e disponibilizar correções, melhorias e funcionalidades seguindo padrões de arquitetura, qualidade, code review e integração contínua.",
+      "wave": "ONDA_1"
+    },
+    {
+      "areaCode": "engineering-dev-open",
+      "code": "POP-EDO-002",
+      "name": "Evolução da Plataforma Tecnológica",
+      "objective": "Evoluir componentes compartilhados, APIs, frameworks, ferramentas e pipelines, promovendo padronização, segurança, automação e reutilização.",
+      "wave": "ONDA_3"
+    },
+    {
+      "areaCode": "engineering-dev-open",
+      "code": "POP-EDO-003",
+      "name": "Sustentação Técnica e Gestão de Incidentes (N3)",
+      "objective": "Investigar, diagnosticar e solucionar problemas técnicos complexos escalados, priorizando incidentes de clientes e definindo correção ou estratégia de atualização.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "engineering-infra-z",
+      "code": "POP-EIZ-001",
+      "name": "Gestão de Modificações de Produtos Z (SCM)",
+      "objective": "Controlar o ciclo de modificação de produtos Z: abertura e cadastramento da modificação, inserção, cadastro e exclusão de módulos, garantindo integridade e rastreabilidade.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "engineering-qa",
+      "code": "POP-EQA-002",
+      "name": "Ciclo de Testes de Software",
+      "objective": "Planejar estratégia e escopo, elaborar e manter casos de teste e executá-los com registro de evidências, garantindo cobertura e rastreabilidade dos requisitos.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "engineering-qa",
+      "code": "POP-EQA-003",
+      "name": "Gestão de Defeitos",
+      "objective": "Registrar, priorizar, acompanhar e validar correções de defeitos encontrados nos testes, garantindo resolução antes da entrega.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "financial-administrative",
+      "code": "POP-FIN-001",
+      "name": "Faturamento e Recebimento (Contas a Receber)",
+      "objective": "Validar e corrigir informações de faturamento e recebimento a partir dos espelhos de contratos, alimentando backlog e fluxo de caixa.",
+      "wave": "ONDA_1"
+    },
+    {
+      "areaCode": "financial-administrative",
+      "code": "POP-FIN-002",
+      "name": "Lançamento e Aprovação de Pagamentos (Contas a Pagar)",
+      "objective": "Modelo padronizado de lançamento e aprovação de pagamentos por alçada, utilizando o sistema Fluxo Online.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "financial-administrative",
+      "code": "POP-FIN-003",
+      "name": "Fechamento Mensal (Financeiro, Contábil e Gerencial)",
+      "objective": "Modelo de conferência e aprovação do fechamento mensal, respeitando prazos e exigências contábeis e fiscais.",
+      "wave": "ONDA_1"
+    },
+    {
+      "areaCode": "fpa",
+      "code": "POP-FPA-001",
+      "name": "Fechamento e Forecast Mensal — Reporte Gerencial (D+5)",
+      "objective": "Apurar e reportar resultados financeiros mensais com análise e desdobramento para áreas e diretoria, sustentando a leitura da empresa por indicadores.",
+      "wave": "ONDA_1"
+    },
+    {
+      "areaCode": "fpa",
+      "code": "POP-FPA-002",
+      "name": "Orçamento Anual (Zero-Based)",
+      "objective": "Construir o orçamento anual base zero com interação com todas as áreas, controle e acompanhamento.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "fpa",
+      "code": "POP-FPA-003",
+      "name": "Precificação de Ofertas Eccox",
+      "objective": "Padronizar a precificação de ofertas e oportunidades junto ao Comercial, com cenários econômico-financeiros por venda.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "fpa",
+      "code": "POP-FPA-004",
+      "name": "Fluxo de Caixa (Mensal — Board)",
+      "objective": "Consolidar e projetar o fluxo de caixa mensal para o board a partir do consolidado entregue pela Milena, antecipando necessidades de liquidez.",
+      "wave": "ONDA_1"
+    },
+    {
+      "areaCode": "infrastructure-security",
+      "code": "POP-INS-001",
+      "name": "Atendimento de Chamados Internos (TI)",
+      "objective": "Receber e processar solicitações de suporte, consulta e apoio aos colaboradores quanto à infraestrutura interna de tecnologia e segurança.",
+      "wave": "ONDA_3"
+    },
+    {
+      "areaCode": "infrastructure-security",
+      "code": "POP-INS-002",
+      "name": "Provisionamento de Admissão (Acessos e Recursos)",
+      "objective": "Preparar e garantir alocação e configuração correta e segura dos recursos para o novo colaborador desempenhar suas atividades.",
+      "wave": "ONDA_3"
+    },
+    {
+      "areaCode": "infrastructure-security",
+      "code": "POP-INS-003",
+      "name": "Solicitação de Criação de Novos Ambientes",
+      "objective": "Receber, avaliar e atender solicitações de criação de novos ambientes (máquinas, VMs, acessos e configurações) para projetos e áreas internas, com padrão, segurança e rastreabilidade.",
+      "wave": "ONDA_3"
+    },
+    {
+      "areaCode": "infrastructure-security",
+      "code": "POP-INS-004",
+      "name": "Gestão de Acessos e Identidades",
+      "objective": "Conceder, revisar periodicamente e revogar acessos a sistemas e dados, incluindo a revogação imediata no desligamento, garantindo o princípio do menor privilégio.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "infrastructure-security",
+      "code": "POP-INS-005",
+      "name": "Gestão de Ativos de TI",
+      "objective": "Inventariar, classificar e controlar o ciclo de vida dos ativos de TI (equipamentos, licenças, softwares), da compra ao descarte seguro.",
+      "wave": "ONDA_3"
+    },
+    {
+      "areaCode": "infrastructure-security",
+      "code": "POP-INS-006",
+      "name": "Segurança da Informação (Incidentes, Backup, LGPD técnico)",
+      "objective": "Prevenir e responder tecnicamente a incidentes de segurança, gerir backups e sustentar os controles técnicos de LGPD.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "marketing",
+      "code": "POP-MKT-001",
+      "name": "Gestão de Marca e Posicionamento",
+      "objective": "Garantir consistência de identidade visual, verbal e de posicionamento em todos os pontos de contato — gate final de narrativa da empresa.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "marketing",
+      "code": "POP-MKT-002",
+      "name": "Planejamento e Produção de Conteúdo",
+      "objective": "Planejar, produzir, validar e distribuir conteúdo multicanal ancorado em persona, funil e pilar editorial, construindo autoridade e alimentando a jornada do cliente.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "marketing",
+      "code": "POP-MKT-003",
+      "name": "Geração de Demanda e Nutrição de Leads",
+      "objective": "Atrair, qualificar e nutrir leads pelos canais digitais, entregando MQLs/SQLs ao Comercial e reduzindo o ciclo de vendas.",
+      "wave": "ONDA_1"
+    },
+    {
+      "areaCode": "marketing",
+      "code": "POP-MKT-004",
+      "name": "Gestão de Eventos e Webinars",
+      "objective": "Planejar, executar e mensurar participação em eventos próprios, de parceiros e de mercado, gerando relacionamento, autoridade e leads.",
+      "wave": "ONDA_3"
+    },
+    {
+      "areaCode": "marketing",
+      "code": "POP-MKT-005",
+      "name": "Marketing de Parcerias (Co-marketing)",
+      "objective": "Estruturar ações e materiais conjuntos com parceiros tecnológicos (BMC, InterSystems, Confluent, 21CS), habilitando o canal indireto e ampliando pipeline compartilhado.",
+      "wave": "ONDA_3"
+    },
+    {
+      "areaCode": "marketing",
+      "code": "POP-MKT-006",
+      "name": "Endomarketing e Comunicação Interna",
+      "objective": "Fortalecer cultura, engajamento e pertencimento por meio de comunicação interna, campanhas e rituais, apoiando atração e retenção de talentos.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "people-performance",
+      "code": "POP-PEP-001",
+      "name": "Onboarding (90 dias, Anjo de Acolhimento)",
+      "objective": "Criar experiência de entrada positiva que aumente engajamento, produtividade e retenção, incluindo assinatura do Manual de Cultura.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "people-performance",
+      "code": "POP-PEP-002",
+      "name": "Avaliação de Performance e PDI (Making Better)",
+      "objective": "Alinhar o desempenho das pessoas à estratégia, garantindo que o esforço individual contribua para os resultados da empresa, com ciclo de avaliação e PDI.",
+      "wave": "ONDA_3"
+    },
+    {
+      "areaCode": "people-performance",
+      "code": "POP-PEP-003",
+      "name": "Recrutamento & Seleção",
+      "objective": "Critérios e etapas padronizadas para atrair, avaliar e selecionar candidatos alinhados aos requisitos técnicos, comportamentais e culturais, dentro de prazo e orçamento.",
+      "wave": "CONCLUIDO"
+    },
+    {
+      "areaCode": "people-performance",
+      "code": "POP-PEP-004",
+      "name": "Controle de Ponto Eletrônico",
+      "objective": "Regras e responsabilidades para registro e tratamento da jornada (marcações, ajustes, horas extras, banco de horas, ausências), conforme CLT e Portaria 671/2021.",
+      "wave": "ONDA_1"
+    },
+    {
+      "areaCode": "people-performance",
+      "code": "POP-PEP-005",
+      "name": "Desligamento (Offboarding)",
+      "objective": "Conduzir desligamentos com entrevista de saída, devolução de ativos e encerramento de acessos.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "people-performance",
+      "code": "POP-PEP-006",
+      "name": "Treinamento & Desenvolvimento (T&D)",
+      "objective": "Levantar necessidades por área e cargo, mapear instrutores e operar a esteira de treinamentos (interno + externo + NotebookLM).",
+      "wave": "ONDA_3"
+    },
+    {
+      "areaCode": "pmo",
+      "code": "POP-PMO-001",
+      "name": "Priorização e Aprovação de Projetos",
+      "objective": "Critérios (valor estratégico, urgência, esforço, risco) e fluxo para priorizar e aprovar formalmente novos projetos antes da execução.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "pmo",
+      "code": "POP-PMO-002",
+      "name": "Planejamento e Acompanhamento de Projetos",
+      "objective": "Estruturar cronograma, escopo, orçamento e indicadores (baseline, SPI/CPI) e acompanhar o progresso com status reports e reuniões periódicas.",
+      "wave": "ONDA_1"
+    },
+    {
+      "areaCode": "pmo",
+      "code": "POP-PMO-003",
+      "name": "Gestão de Riscos e Mudanças (Change Request)",
+      "objective": "Identificar, registrar e tratar riscos e avaliar/aprovar mudanças de escopo, prazo ou custo no ciclo de vida dos projetos.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "pmo",
+      "code": "POP-PMO-004",
+      "name": "Governança e Relatório de Status",
+      "objective": "Consolidar e reportar status dos projetos ao board e stakeholders de forma padronizada: auditorias, Project Reviews e dashboards executivos.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "pmo",
+      "code": "POP-PMO-005",
+      "name": "Gestão de Portfólio de Projetos",
+      "objective": "Visão consolidada de todos os projetos, alocação de recursos entre iniciativas, gaps de capacidade e alinhamento estratégico do portfólio.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "pre-sales",
+      "code": "POP-PRV-001",
+      "name": "Perfil do Cliente Ideal (ICP) e Qualificação de Contas",
+      "objective": "Transformar listas de empresas em oportunidades qualificadas para vendas consultivas de soluções corporativas.",
+      "wave": "ONDA_3"
+    },
+    {
+      "areaCode": "pre-sales",
+      "code": "POP-PRV-002",
+      "name": "Acionamento e Qualificação Técnica de Pré-Vendas",
+      "objective": "Gatilho e critérios mínimos para Vendas solicitar apoio técnico a partir de oportunidade no CRM, com demanda qualificada e esforço rastreado desde o primeiro contato.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "pre-sales",
+      "code": "POP-PRV-003",
+      "name": "Demonstração de Produto Eccox",
+      "objective": "Padronizar planejamento, execução e registro de demos com roteiro e ambiente homologados, devolvendo resultado e próximos passos ao CRM.",
+      "wave": "ONDA_3"
+    },
+    {
+      "areaCode": "pre-sales",
+      "code": "POP-PRV-004",
+      "name": "Prova de Conceito (POC)",
+      "objective": "Conduzir POCs com escopo, critérios de aceite e prazo formalizados antes do início, horas apontadas no ERP e desfecho registrado no CRM.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "pre-sales",
+      "code": "POP-PRV-005",
+      "name": "Dimensionamento e Proposta Técnica",
+      "objective": "Traduzir requisitos em escopo técnico, premissas, riscos e estimativa de esforço/licenciamento que sustentem a proposta comercial, alimentando ERP e CRM.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "sales-revenue",
+      "code": "POP-SAL-001",
+      "name": "Gestão do Pipeline e Qualificação (Funil 0–7, MEDDPICC)",
+      "objective": "Identificar, qualificar e desenvolver oportunidades com prospecção estruturada, qualificação MEDDPICC, planejamento de contas e Go/No-Go.",
+      "wave": "ONDA_1"
+    },
+    {
+      "areaCode": "sales-revenue",
+      "code": "POP-SAL-002",
+      "name": "Engenharia de Valor e CVR (Collaborative Value Review)",
+      "objective": "Compreender desafios do cliente e construir Value Cases, Business Case e ROI, alinhando critérios de sucesso que sustentam a decisão de investimento.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "sales-revenue",
+      "code": "POP-SAL-003",
+      "name": "Arquitetura Comercial e Gestão de Propostas",
+      "objective": "Coordenar propostas técnicas e comerciais: desenho da solução, BOM, sizing, DRE, pricing e aprovação executiva até a submissão ao cliente.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "sales-revenue",
+      "code": "POP-SAL-004",
+      "name": "Gestão de Alianças Estratégicas e Canais",
+      "objective": "Desenvolver alianças com fabricantes, parceiros e integradores: Go-to-Market, capacitação, geração de pipe, forecast e expansão de mercado.",
+      "wave": "ONDA_3"
+    },
+    {
+      "areaCode": "pmo",
+      "code": "POP-PMO-006",
+      "name": "Transição Comercial → Operação (Handover)",
+      "objective": "Padronizar a transição da oportunidade ganha até o início da operação: informações produzidas, validadas e aprovadas em cada fase, com rastreabilidade e alinhamento entre áreas.",
+      "wave": "ONDA_1"
+    },
+    {
+      "areaCode": "service-delivery-pedro",
+      "code": "POP-SDP-001",
+      "name": "Gestão da Capacidade e Alocação de Recursos",
+      "objective": "Planejar, alocar e acompanhar a capacidade das equipes com critérios de distribuição por prioridade, competência e demanda, balanceando carga e evitando ociosidade/sobrecarga.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "service-delivery-pedro",
+      "code": "POP-SDP-002",
+      "name": "Gestão do Conhecimento e Continuidade Operacional",
+      "objective": "Capturar, organizar e disseminar o conhecimento gerado nos serviços, garantindo continuidade operacional e reduzindo dependência de profissionais específicos.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "service-delivery-pedro",
+      "code": "POP-SDP-003",
+      "name": "Análise de Viabilidade Técnica e Padronização de Soluções",
+      "objective": "Avaliar viabilidade técnica das demandas (restrições, dependências, riscos, alternativas), com reutilização de soluções e padrões técnicos para novos desenvolvimentos.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "service-delivery-thiago",
+      "code": "POP-SDT-001",
+      "name": "Metodologia de Aferição de Ganhos (com o Cliente)",
+      "objective": "Definir com o cliente a metodologia de aferição dos ganhos: ferramentas, indicadores, períodos de comparação, responsáveis e critérios de aceite.",
+      "wave": "ONDA_1"
+    },
+    {
+      "areaCode": "service-delivery-pedro",
+      "code": "POP-SDP-004",
+      "name": "Gestão da Documentação Técnica e do Conhecimento",
+      "objective": "Padronizar documentação técnica, procedimentos, soluções e registros, preservando conhecimento e reduzindo dependência individual.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "service-delivery-pedro",
+      "code": "POP-SDP-005",
+      "name": "Gestão de Dependências Técnicas",
+      "objective": "Identificar e coordenar dependências entre Desenvolvimento, DBA, CICS, z/OS, Capacity, Segurança e Infraestrutura durante o ciclo de entrega.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "service-delivery-pedro",
+      "code": "POP-SDP-006",
+      "name": "Governança Técnica das Soluções",
+      "objective": "Fluxo padronizado de análise técnica, estratégia de implementação, alinhamento com cliente, certificação, implantação controlada e comprovação de resultados.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "service-delivery-thiago",
+      "code": "POP-SDT-002",
+      "name": "Pipeline de Oportunidades de Otimização (MIPS)",
+      "objective": "Manter backlog priorizado de oportunidades de redução de MIPS com status, esforço, ganho esperado e ganho realizado.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "software-delivery",
+      "code": "POP-SWD-001",
+      "name": "Suporte Técnico ao Cliente (N1/N2)",
+      "objective": "Atender e resolver solicitações técnicas dos clientes dentro dos SLAs contratuais, com classificação, primeira resposta, FCR e escalação estruturada.",
+      "wave": "ONDA_1"
+    },
+    {
+      "areaCode": "software-delivery",
+      "code": "POP-SWD-002",
+      "name": "Instalação e Customização de Software (Deployment)",
+      "objective": "Instalar e customizar softwares Eccox e de parceiros, garantindo prontidão para uso do cliente, incluindo atualização de versão.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "software-delivery",
+      "code": "POP-SWD-003",
+      "name": "Controle de Versão Operacional de Produto",
+      "objective": "Controlar quais versões de cada produto estão implantadas em cada cliente.",
+      "wave": "ONDA_2"
+    },
+    {
+      "areaCode": "software-delivery",
+      "code": "POP-SWD-004",
+      "name": "Gestão de Senhas e Licenças de Clientes",
+      "objective": "Gerir ponta-a-ponta senhas/licenças de produtos disponibilizadas a clientes, da geração à entrega e renovação.",
+      "wave": "ONDA_3"
+    },
+    {
+      "areaCode": "software-delivery",
+      "code": "POP-SWD-005",
+      "name": "Manutenção e Atualização das Máquinas Internas",
+      "objective": "Garantir que as máquinas da equipe de suporte estejam atualizadas e disponíveis para testes.",
+      "wave": "ONDA_3"
+    },
+    {
+      "areaCode": "transversal-gestao",
+      "code": "POP-TRG-001",
+      "name": "Cadências e Rituais de Gestão (1:1, Comitês, PDCA)",
+      "objective": "Definir e operar as cadências (semanal, mensal, trimestral) e rituais de gestão (1:1, 1:N, comitês, fóruns) de toda a empresa.",
+      "wave": "ONDA_1"
+    },
+    {
+      "areaCode": "transversal-gestao",
+      "code": "POP-TRG-002",
+      "name": "Reading de Indicadores e Faróis (Gestão por Dados)",
+      "objective": "Operar a leitura semanal de indicadores com modelo de farol e tratamento de desvios (5 Porquês, 3Qs, 5W2H).",
+      "wave": "ONDA_2"
+    }
+  ]
+}

@@ -1,0 +1,315 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+/*
+  ECCOX ATLAS — design system.
+  Marca: azul petroleo + ciano (style guide "ECI - Eccox Core Intelligence").
+  Convencao de tema: :root = claro, .dark = escuro (padrao do shadcn), mas o
+  next-themes arranca com defaultTheme="dark" — o produto e dark-first.
+  Nunca usar hex direto em classe utilitaria: so token semantico.
+*/
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: #f3f5f7;
+  --foreground: #0f172a;
+
+  --surface: #ffffff;
+  --surface-elevated: #ffffff;
+
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+
+  --primary: #004f67;
+  --primary-foreground: #ffffff;
+
+  --secondary: #e8eef1;
+  --secondary-foreground: #0f172a;
+
+  --muted: #eef2f4;
+  --muted-foreground: #475569;
+
+  /* Superficie de realce (hover de item, linha ativa) — semantica shadcn. */
+  --accent: #e0f4f7;
+  --accent-foreground: #004f67;
+
+  /* Ciano da marca: a "luz" do Atlas. Realce visual, nunca superficie. */
+  --brand: #00a8c7;
+  --brand-foreground: #ffffff;
+  --brand-glow: rgb(0 168 199 / 0.16);
+  --brand-soft: rgb(0 168 199 / 0.08);
+
+  --border: #dde6ee;
+  --input: #dde6ee;
+  --ring: #004f67;
+
+  --success: #10b981;
+  --warning: #f59e0b;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --info: #38bdf8;
+
+  --chart-1: #00a8c7;
+  --chart-2: #004f67;
+  --chart-3: #38bdf8;
+  --chart-4: #f59e0b;
+  --chart-5: #8b7fd4;
+
+  /*
+    Onda e um criterio ordinal (1 = mais urgente), nao categorias independentes:
+    rampa sequencial de um unico matiz, monotonica em luminancia. "Concluido" sai
+    da rampa porque e estado, nao urgencia — e por isso usa a cor de sucesso.
+    A Onda 3 fica abaixo de 3:1 nos dois temas de proposito (e o passo mais claro
+    da rampa), entao todo segmento de onda leva sempre o numero ao lado.
+  */
+  --wave-1: #013f52;
+  --wave-2: #007d9a;
+  --wave-3: #35b4cd;
+  --wave-done: #10b981;
+
+  --sidebar: #ffffff;
+  --sidebar-foreground: #0f172a;
+  --sidebar-primary: #004f67;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #e0f4f7;
+  --sidebar-accent-foreground: #004f67;
+  --sidebar-border: #dde6ee;
+  --sidebar-ring: #004f67;
+
+  --radius: 8px;
+}
+
+.dark {
+  --background: #06161d;
+  --foreground: #e6f1f5;
+
+  --surface: #0b222c;
+  --surface-elevated: #10303c;
+
+  --card: #0b222c;
+  --card-foreground: #e6f1f5;
+  --popover: #10303c;
+  --popover-foreground: #e6f1f5;
+
+  --primary: #0a6e8a;
+  --primary-foreground: #f2fbfd;
+
+  --secondary: #10303c;
+  --secondary-foreground: #cfe4eb;
+
+  --muted: #0e2934;
+  --muted-foreground: #8da8b3;
+
+  --accent: #143b49;
+  --accent-foreground: #e6f1f5;
+
+  --brand: #00a8c7;
+  --brand-foreground: #04222a;
+  --brand-glow: rgb(0 168 199 / 0.28);
+  --brand-soft: rgb(0 168 199 / 0.1);
+
+  --border: rgb(0 168 199 / 0.14);
+  --input: rgb(0 168 199 / 0.2);
+  --ring: #00a8c7;
+
+  --destructive: #f87171;
+  --destructive-foreground: #2a0b0b;
+
+  --sidebar: #0b222c;
+  --sidebar-foreground: #e6f1f5;
+  --sidebar-primary: #00a8c7;
+  --sidebar-primary-foreground: #04222a;
+  --sidebar-accent: #143b49;
+  --sidebar-accent-foreground: #e6f1f5;
+  --sidebar-border: rgb(0 168 199 / 0.14);
+  --sidebar-ring: #00a8c7;
+
+  /* Mesma rampa, re-passada para a superficie escura. */
+  --wave-1: #5fe0f2;
+  --wave-2: #1e9ebb;
+  --wave-3: #0f5f72;
+  --wave-done: #10b981;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-info: var(--info);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --color-wave-1: var(--wave-1);
+  --color-wave-2: var(--wave-2);
+  --color-wave-3: var(--wave-3);
+  --color-wave-done: var(--wave-done);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply font-sans;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-size: 0.875rem;
+    line-height: 1.571;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Atmosfera: dois halos difusos + grid de 1px. CSS puro, sem canvas. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+    background:
+      radial-gradient(60rem 40rem at 12% -8%, rgb(0 168 199 / 0.07), transparent 70%),
+      radial-gradient(52rem 36rem at 92% 6%, rgb(0 79 103 / 0.06), transparent 72%);
+  }
+
+  .dark body::before {
+    background:
+      radial-gradient(60rem 40rem at 12% -8%, rgb(0 168 199 / 0.13), transparent 70%),
+      radial-gradient(52rem 36rem at 92% 6%, rgb(10 110 138 / 0.18), transparent 72%);
+  }
+
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.4;
+    background-image:
+      linear-gradient(to right, var(--border) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+    background-size: 4rem 4rem;
+    mask-image: radial-gradient(70rem 50rem at 50% 0%, black, transparent 75%);
+  }
+
+  ::selection {
+    background-color: var(--brand-glow);
+  }
+}
+
+@layer components {
+  .container-page {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 2rem;
+  }
+
+  .container-read {
+    width: 100%;
+    max-width: 46rem;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  /* Rotulo de secao: 11px, caixa alta, tracking largo. */
+  .label-caps {
+    font-size: 0.6875rem;
+    line-height: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+  }
+
+  .surface-panel {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+  }
+}
+
+@layer utilities {
+  .glow-brand {
+    box-shadow:
+      0 0 0 1px var(--brand-soft),
+      0 0 2.5rem -0.5rem var(--brand-glow);
+  }
+
+  .text-gradient-brand {
+    background-image: linear-gradient(100deg, var(--foreground) 32%, var(--brand));
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+/*
+  Pagina de impressao do documento (Fase G): sem cabecalho, sem atmosfera de
+  fundo, texto sempre em preto sobre branco — o PDF sai do "Salvar como PDF"
+  do navegador, entao o que aparece aqui e exatamente o que sai no arquivo.
+*/
+@media print {
+  body::before,
+  body::after {
+    display: none;
+  }
+
+  .no-print,
+  header {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+}

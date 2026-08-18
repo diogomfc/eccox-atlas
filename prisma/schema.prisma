@@ -1,0 +1,389 @@
+// ECCOX ATLAS — modelo de dados
+// Escopo: só Processo (POP, modelo oficial V3). Política saiu do produto.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+// A connection string vive em prisma.config.ts (Prisma 7) e o cliente recebe
+// o adapter @prisma/adapter-pg em src/lib/db.ts.
+datasource db {
+  provider = "postgresql"
+}
+
+/// Onda de implementacao herdada do catalogo V6. Sem os criterios de pontuacao
+/// que a calculavam — aqui e so um campo editavel de fila de prioridade.
+enum Wave {
+  ONDA_1
+  ONDA_2
+  ONDA_3
+  CONCLUIDO
+}
+
+enum ProcessStatus {
+  RASCUNHO
+  EM_ENTREVISTA
+  EM_REVISAO
+  APROVADO
+}
+
+enum ProcessPriority {
+  BAIXA
+  MEDIA
+  ALTA
+  CRITICA
+}
+
+/// Campo "Classificacao" do cabecalho fixo do modelo oficial.
+enum Classification {
+  INTERNA_GERAL
+  INTERNA_EXCLUSIVA_AREA
+  PUBLICA
+}
+
+enum LinkStatus {
+  PENDENTE
+  EM_ANDAMENTO
+  CONCLUIDO
+  EXPIRADO
+}
+
+enum InterviewStatus {
+  RASCUNHO
+  ENVIADA
+  EM_REVISAO
+  APROVADA
+}
+
+enum ReviewDecision {
+  APROVADO
+  SOLICITAR_REVISAO
+}
+
+enum QuestionInputKind {
+  TEXT
+  LONG_TEXT
+  NUMBER
+  LIST
+  STEPS
+}
+
+enum UserRole {
+  GESTOR
+  COLABORADOR
+}
+
+enum FlowKind {
+  AS_IS
+  TO_BE
+}
+
+/// Taxonomia dos nos do fluxo. AUTOMACAO e AGENTE_IA so aparecem no To-Be
+/// (Fase 8, sugestao de otimizacao — ainda nao implementada).
+enum FlowNodeType {
+  GATILHO
+  MANUAL
+  INTEGRACAO
+  DECISAO
+  APROVACAO
+  AUTOMACAO
+  AGENTE_IA
+  FIM
+}
+
+/// Usuario provisionado a partir do login Entra ID. So existe depois do
+/// primeiro login — nao e sincronizado do diretorio da empresa por completo.
+model User {
+  id         String   @id @default(cuid())
+  entraOid   String   @unique
+  name       String
+  email      String   @unique
+  department String?
+  jobTitle   String?
+  avatarUrl  String?
+  role       UserRole @default(COLABORADOR)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  invitesSent               InterviewLink[]      @relation("InvitedBy")
+  interviewLinks            InterviewLink[]      @relation("Respondent")
+  reviews                   Review[]
+  areasOwned                Area[]               @relation("AreaOwner")
+  processesOwned            Process[]            @relation("ProcessOwner")
+  consolidatedAnswersEdited ConsolidatedAnswer[]
+  attachmentsUploaded       AnswerAttachment[]
+}
+
+model Area {
+  id         String   @id @default(cuid())
+  code       String   @unique
+  sigla      String   @unique
+  name       String   @unique
+  /// Legado do import V6 — texto livre, sem correspondência garantida a um
+  /// User. Vira fallback de exibição quando `ownerId` não está preenchido.
+  ownerName  String?
+  ownerEmail String?
+  ownerId    String?
+  owner      User?    @relation("AreaOwner", fields: [ownerId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  processes Process[]
+}
+
+model Process {
+  id               String          @id @default(cuid())
+  areaId           String
+  code             String          @unique
+  name             String
+  objective        String?
+  /// Texto livre, nao FK: a que politica este processo se relaciona, se houver.
+  relatedPolicyRef String?
+  wave             Wave            @default(ONDA_1)
+  status           ProcessStatus   @default(RASCUNHO)
+  priority         ProcessPriority @default(MEDIA)
+  /// Roteiro montado do zero (nao o POP V3 padrao) — aparece como opcao de
+  /// "usar como modelo" no cadastro de outro processo da mesma area.
+  isCustomTemplate Boolean         @default(false)
+  /// Dono do processo (cargo), texto livre normalmente preenchido pela entrevista —
+  /// distinto de `ownerId`, o responsável administrativo escolhido no cadastro.
+  ownerName        String?
+  ownerId          String?
+  owner            User?           @relation("ProcessOwner", fields: [ownerId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  area                Area                 @relation(fields: [areaId], references: [id], onDelete: Cascade)
+  sections            ProcessSection[]
+  questions           ProcessQuestion[]
+  links               InterviewLink[]
+  documents           Document[]
+  consolidatedAnswers ConsolidatedAnswer[]
+  attachments         AnswerAttachment[]
+
+  @@index([areaId, status])
+  @@index([wave])
+}
+
+/// Grupo de perguntas do roteiro — o padrao POP V3 nasce com 4 (Objetivo,
+/// Responsavel, Ferramentas, Passos), mas o gestor pode criar quantos quiser.
+/// Nao ha mais nome fixo: "Passos" e so uma convencao do template padrao —
+/// o desenho do processo (secao 5) e derivado estruturalmente, achando o
+/// grupo que contem a pergunta do tipo STEPS, nao pelo nome do grupo.
+model ProcessSection {
+  id        String   @id @default(cuid())
+  processId String
+  label     String
+  order     Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  process   Process           @relation(fields: [processId], references: [id], onDelete: Cascade)
+  questions ProcessQuestion[]
+
+  @@unique([processId, order])
+  @@index([processId])
+}
+
+model ProcessQuestion {
+  id            String            @id @default(cuid())
+  processId     String
+  sectionId     String
+  order         Int
+  questionText  String
+  helperText    String?
+  inputKind     QuestionInputKind @default(TEXT)
+  placeholder   String?
+  required      Boolean           @default(true)
+  /// Libera o upload de evidências (print, PDF, planilha) nesta pergunta do
+  /// formulário do entrevistado — desligado por padrão, o gestor liga por
+  /// pergunta conforme faz sentido pro roteiro.
+  allowEvidence Boolean           @default(false)
+  /// Marca esta pergunta (tipo LIST ou STEPS) como a fonte do desenho
+  /// automático do fluxo (seção 5) — estrutural, não depende do nome do
+  /// grupo nem de um tipo fixo. No máximo uma marcada por processo, garantido
+  /// em código (src/app/actions/processes.ts), não em constraint de banco.
+  isFlowSource  Boolean           @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  process             Process              @relation(fields: [processId], references: [id], onDelete: Cascade)
+  section             ProcessSection       @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  answers             InterviewAnswer[]
+  consolidatedAnswers ConsolidatedAnswer[]
+  attachments         AnswerAttachment[]
+
+  @@unique([sectionId, order])
+  @@index([processId])
+  @@index([sectionId])
+}
+
+model InterviewLink {
+  id        String     @id @default(cuid())
+  processId String
+  token     String     @unique
+  status    LinkStatus @default(PENDENTE)
+  expiresAt DateTime
+  createdAt DateTime   @default(now())
+
+  invitedById      String
+  respondentUserId String
+
+  process    Process    @relation(fields: [processId], references: [id], onDelete: Cascade)
+  invitedBy  User       @relation("InvitedBy", fields: [invitedById], references: [id])
+  respondent User       @relation("Respondent", fields: [respondentUserId], references: [id])
+  interview  Interview?
+
+  @@index([processId])
+  @@index([respondentUserId])
+  @@index([status, expiresAt])
+}
+
+model Interview {
+  id     String          @id @default(cuid())
+  linkId String          @unique
+  status InterviewStatus @default(RASCUNHO)
+
+  submittedAt DateTime?
+  completedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  link        InterviewLink      @relation(fields: [linkId], references: [id], onDelete: Cascade)
+  answers     InterviewAnswer[]
+  reviews     Review[]
+  attachments AnswerAttachment[]
+}
+
+model InterviewAnswer {
+  id          String   @id @default(cuid())
+  interviewId String
+  questionId  String
+  /// Formato: { kind: "text"|"longText"|"number"|"list"|"steps", value: ... } —
+  /// mesmo formato usado no formulario, sem conversao intermediaria.
+  valueJson   Json
+  updatedAt   DateTime @updatedAt
+
+  interview Interview       @relation(fields: [interviewId], references: [id], onDelete: Cascade)
+  question  ProcessQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@unique([interviewId, questionId])
+  @@index([interviewId])
+}
+
+model Review {
+  id          String         @id @default(cuid())
+  interviewId String
+  reviewerId  String
+  decision    ReviewDecision
+  comment     String?
+  createdAt   DateTime       @default(now())
+
+  interview Interview @relation(fields: [interviewId], references: [id], onDelete: Cascade)
+  reviewer  User      @relation(fields: [reviewerId], references: [id])
+
+  @@index([interviewId])
+}
+
+model Document {
+  id        String @id @default(cuid())
+  processId String
+  version   Int    @default(1)
+
+  /// Fonte de verdade estruturada: objetivo, responsavel, ferramentas, passos.
+  /// Montagem direta a partir das InterviewAnswer — nao passa por IA.
+  sectionsJson    Json
+  /// Derivado de sectionsJson para leitura, impressao e exportacao.
+  contentMarkdown String
+  /// True enquanto a entrevista que originou esta versao ainda nao foi aprovada.
+  isDraft         Boolean @default(true)
+
+  // Cabecalho fixo do modelo oficial.
+  classification Classification @default(INTERNA_GERAL)
+  elaboradoPor   String
+  dataElaboracao DateTime       @default(now())
+  aprovadoPor    String?
+  dataAprovacao  DateTime?
+  proximaRevisao DateTime?
+  publicadoEm    String         @default("Portal Interno — eccox.sharepoint.com")
+
+  createdAt DateTime @default(now())
+
+  process Process     @relation(fields: [processId], references: [id], onDelete: Cascade)
+  flows   FlowGraph[]
+
+  @@unique([processId, version])
+  @@index([processId])
+}
+
+/// Secao 5 do modelo oficial — desenho do processo, gerado dos Passos.
+model FlowGraph {
+  id           String   @id @default(cuid())
+  documentId   String
+  kind         FlowKind @default(AS_IS)
+  nodesJson    Json
+  edgesJson    Json
+  rationale    String?
+  /// So preenchido em kind=TO_BE: ROI, matriz de papeis, o que morre, loop de
+  /// aprendizado e plano de ondas — ver AiFirstAnalysis em src/lib/ai/gateway.ts.
+  analysisJson Json?
+  createdAt    DateTime @default(now())
+
+  document Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  @@unique([documentId, kind])
+}
+
+/// Resposta definitiva de uma pergunta, uma por processo — unifica as
+/// respostas de todos os entrevistados via IA (ou copia direta se só um
+/// respondeu) e vira a fonte de verdade do Document oficial. O gestor pode
+/// sobrescrever manualmente (isAiGenerated=false).
+model ConsolidatedAnswer {
+  id             String   @id @default(cuid())
+  processId      String
+  questionId     String
+  /// Mesmo formato de InterviewAnswer.valueJson.
+  valueJson      Json
+  isAiGenerated  Boolean  @default(true)
+  editedByUserId String?
+  /// Por que a IA escolheu essa síntese — null se editado manualmente ou
+  /// copiado direto de um único respondente.
+  rationale      String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  process  Process         @relation(fields: [processId], references: [id], onDelete: Cascade)
+  question ProcessQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  editedBy User?           @relation(fields: [editedByUserId], references: [id])
+
+  @@unique([processId, questionId])
+  @@index([processId])
+}
+
+/// Evidência anexada a uma pergunta — print, PDF, planilha etc. Guardada no
+/// MinIO (bucket eccox-atlas-evidencias), só a chave/metadados ficam aqui.
+model AnswerAttachment {
+  id           String   @id @default(cuid())
+  processId    String
+  questionId   String
+  /// null = anexado direto na visão consolidada pelo gestor, sem estar preso
+  /// a nenhum respondente. Setado = anexado durante o preenchimento daquele.
+  interviewId  String?
+  fileName     String
+  fileSize     Int
+  mimeType     String
+  s3Key        String   @unique
+  uploadedById String
+  createdAt    DateTime @default(now())
+
+  process    Process         @relation(fields: [processId], references: [id], onDelete: Cascade)
+  question   ProcessQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  interview  Interview?      @relation(fields: [interviewId], references: [id], onDelete: Cascade)
+  uploadedBy User            @relation(fields: [uploadedById], references: [id])
+
+  @@index([processId, questionId])
+  @@index([interviewId])
+}
