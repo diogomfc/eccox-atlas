@@ -55,6 +55,17 @@ export async function getFileStreamFromMinio(key: string) {
   return client.getObject(BUCKET, key);
 }
 
+export async function getFileBufferFromMinio(key: string): Promise<Buffer> {
+  const stream = await client.getObject(BUCKET, key);
+  return new Promise<Buffer>((resolve, reject) => {
+    const chunks: Buffer[] = [];
+    stream.on("data", (chunk) => chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk)));
+    stream.on("end", () => resolve(Buffer.concat(chunks)));
+    stream.on("error", (err) => reject(err));
+  });
+}
+
 export async function deleteMinioFile(key: string): Promise<void> {
   await client.removeObject(BUCKET, key);
 }
+

@@ -40,18 +40,38 @@ export interface AttachmentActionResult {
  * entrevista dele — mesma checagem de identidade usada em
  * src/app/entrevista/[token]/page.tsx.
  */
-async function requireUploadPermission(interviewId: string | undefined) {
+async function requireUploadPermission(interviewId: string | undefined, processId: string) {
   const session = await auth();
   if (!session?.user) return null;
-  if (session.user.role === "GESTOR") return session;
+  if (session.user.role === "GESTOR") return { session, resolvedInterviewId: interviewId ?? null };
 
-  if (!interviewId) return null;
-  const interview = await db.interview.findUnique({
-    where: { id: interviewId },
-    include: { link: true },
+  if (interviewId) {
+    const interview = await db.interview.findUnique({
+      where: { id: interviewId },
+      include: { link: true },
+    });
+    if (interview && interview.link.respondentUserId === session.user.id) {
+      return { session, resolvedInterviewId: interview.id };
+    }
+  }
+
+  // Se interviewId não foi passado (ex: anexo antes de salvar primeira resposta),
+  // busca o link ativo do respondente para este processo.
+  const activeLink = await db.interviewLink.findFirst({
+    where: { processId, respondentUserId: session.user.id },
+    include: { interview: true },
   });
-  if (!interview || interview.link.respondentUserId !== session.user.id) return null;
-  return session;
+  if (!activeLink) return null;
+
+  let finalInterviewId = activeLink.interview?.id;
+  if (!finalInterviewId) {
+    const newInterview = await db.interview.create({
+      data: { linkId: activeLink.id, status: "RASCUNHO" },
+    });
+    finalInterviewId = newInterview.id;
+  }
+
+  return { session, resolvedInterviewId: finalInterviewId };
 }
 
 export async function uploadAttachmentAction(formData: FormData): Promise<AttachmentActionResult> {
@@ -65,8 +85,9 @@ export async function uploadAttachmentAction(formData: FormData): Promise<Attach
   }
   const { processId, questionId, interviewId } = parsed.data;
 
-  const session = await requireUploadPermission(interviewId);
-  if (!session) return { ok: false, error: "Sem permissão para anexar evidência aqui." };
+  const authResult = await requireUploadPermission(interviewId, processId);
+  if (!authResult) return { ok: false, error: "Sem permissão para anexar evidência aqui." };
+  const { session, resolvedInterviewId } = authResult;
 
   const file = formData.get("file");
   if (!(file instanceof File)) return { ok: false, error: "Nenhum arquivo enviado." };
@@ -100,7 +121,7 @@ export async function uploadAttachmentAction(formData: FormData): Promise<Attach
     data: {
       processId,
       questionId,
-      interviewId: interviewId ?? null,
+      interviewId: resolvedInterviewId,
       fileName: file.name,
       fileSize: file.size,
       mimeType: file.type,
@@ -110,7 +131,7 @@ export async function uploadAttachmentAction(formData: FormData): Promise<Attach
   });
 
   revalidatePath(`/processos/${processId}`);
-  if (interviewId) revalidatePath(`/entrevistas/${interviewId}`);
+  if (resolvedInterviewId) revalidatePath(`/entrevistas/${resolvedInterviewId}`);
   return { ok: true, id: attachment.id };
 }
 

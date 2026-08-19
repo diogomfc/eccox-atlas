@@ -1,6 +1,7 @@
 import "server-only";
 import { db } from "@/lib/db";
 import { type Answer, AnswerSchema, emptyAnswer } from "@/lib/interview/answers";
+import type { InterviewAnswer } from "@/generated/prisma/client";
 import {
   currentPrompt,
   type InterviewPrompt,
@@ -57,7 +58,7 @@ export async function getInterviewByToken(token: string): Promise<InterviewState
 
   if (!link) return null;
 
-  const answers = link.interview?.answers ?? [];
+  const answers: InterviewAnswer[] = link.interview?.answers ?? [];
   const answeredIds = new Set(answers.map((answer) => answer.questionId));
   const completed = Boolean(
     link.interview && (link.interview.status === "ENVIADA" || link.interview.status === "APROVADA"),
@@ -96,13 +97,13 @@ export async function getInterviewByToken(token: string): Promise<InterviewState
       code: link.process.code,
       name: link.process.name,
       objective: link.process.objective,
-      areaName: link.process.area.name,
-      areaSigla: link.process.area.sigla,
+      areaName: link.process.area?.name ?? "",
+      areaSigla: link.process.area?.sigla ?? "",
     },
     respondent: {
-      id: link.respondent.id,
-      name: link.respondent.name,
-      email: link.respondent.email,
+      id: link.respondent?.id ?? "",
+      name: link.respondent?.name ?? "",
+      email: link.respondent?.email ?? "",
     },
     interviewStatus: link.interview?.status ?? null,
     reviewComment:

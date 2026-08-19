@@ -11,11 +11,48 @@ services:
       - "5435:5432"
     volumes:
       - atlas-pgdata:/var/lib/postgresql/data
+    networks:
+      - atlas-net
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U atlas -d eccox_atlas"]
       interval: 5s
       timeout: 5s
       retries: 10
 
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: eccox-atlas-app
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - /opt/eci/certs/eci.eccox.crt:/app/public/eci.eccox.crt:ro
+    environment:
+
+      DATABASE_URL: postgresql://atlas:atlas-dev@postgres:5432/eccox_atlas
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - atlas-net
+      - traefik-public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik-public"
+      - "traefik.http.routers.eccox-atlas.rule=Host(`dev.eci.eccox`)"
+      - "traefik.http.routers.eccox-atlas.entrypoints=websecure"
+      - "traefik.http.routers.eccox-atlas.tls=true"
+      - "traefik.http.services.eccox-atlas.loadbalancer.server.port=3000"
+
+
+networks:
+  atlas-net:
+    driver: bridge
+  traefik-public:
+    external: true
+
 volumes:
   atlas-pgdata:
+

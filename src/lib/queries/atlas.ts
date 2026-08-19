@@ -125,9 +125,14 @@ export async function getAreaDetail(code: string): Promise<AreaDetail | null> {
 }
 
 export async function listAreaCodes(): Promise<string[]> {
-  const areas = await db.area.findMany({ select: { code: true } });
-  return areas.map((area) => area.code);
+  try {
+    const areas = await db.area.findMany({ select: { code: true } });
+    return areas.map((area) => area.code);
+  } catch {
+    return [];
+  }
 }
+
 
 export async function listAreasForForm() {
   return db.area.findMany({

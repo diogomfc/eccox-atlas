@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  Download,
   FileSpreadsheet,
   FileText,
   Image as ImageIcon,
@@ -11,6 +12,7 @@ import {
 } from "lucide-react";
 import { useRef, useState, useTransition } from "react";
 import { deleteAttachmentAction, uploadAttachmentAction } from "@/app/actions/attachments";
+import { AttachmentLightbox } from "@/components/interview/attachment-lightbox";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -47,6 +49,10 @@ function formatSize(bytes: number): string {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
+function isImage(mimeType: string): boolean {
+  return mimeType.startsWith("image/");
+}
+
 export function QuestionAttachmentDropzone({
   processId,
   questionId,
@@ -58,6 +64,7 @@ export function QuestionAttachmentDropzone({
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const [dragOver, setDragOver] = useState(false);
+  const [lightboxAttachment, setLightboxAttachment] = useState<AttachmentItem | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   function handleFiles(files: FileList | null) {
@@ -83,11 +90,54 @@ export function QuestionAttachmentDropzone({
     });
   }
 
+  const imageAttachments = attachments.filter((a) => isImage(a.mimeType));
+  const fileAttachments = attachments.filter((a) => !isImage(a.mimeType));
+
   return (
     <div className="space-y-2">
-      {attachments.length > 0 ? (
+      {/* Thumbnails de imagens */}
+      {imageAttachments.length > 0 ? (
+        <div className="flex flex-wrap gap-2">
+          {imageAttachments.map((attachment) => (
+            <div key={attachment.id} className="group relative">
+              <button
+                type="button"
+                className="overflow-hidden rounded-lg border border-border bg-surface transition-all hover:border-ring hover:shadow-md"
+                onClick={() => setLightboxAttachment(attachment)}
+                aria-label={`Ver ${attachment.fileName}`}
+              >
+                <img
+                  src={`/api/attachments/${attachment.id}?inline=true`}
+                  alt={attachment.fileName}
+                  className="h-20 w-20 object-cover"
+                  loading="lazy"
+                />
+              </button>
+              {!readOnly ? (
+                <Button
+                  type="button"
+                  variant="destructive"
+                  size="icon-xs"
+                  className="absolute -top-1.5 -right-1.5 opacity-0 shadow-sm transition-opacity group-hover:opacity-100"
+                  disabled={disabled || pending}
+                  aria-label="Remover anexo"
+                  onClick={() => handleDelete(attachment.id)}
+                >
+                  <Trash2 className="size-3" />
+                </Button>
+              ) : null}
+              <p className="mt-0.5 max-w-20 truncate text-center text-[0.6rem] text-muted-foreground">
+                {attachment.fileName}
+              </p>
+            </div>
+          ))}
+        </div>
+      ) : null}
+
+      {/* Lista de arquivos não-imagem */}
+      {fileAttachments.length > 0 ? (
         <ul className="space-y-1.5">
-          {attachments.map((attachment) => {
+          {fileAttachments.map((attachment) => {
             const Icon = iconFor(attachment.mimeType);
             return (
               <li
@@ -97,6 +147,7 @@ export function QuestionAttachmentDropzone({
                 <Icon className="size-3.5 shrink-0 text-muted-foreground" />
                 <a
                   href={`/api/attachments/${attachment.id}`}
+                  download
                   className="min-w-0 flex-1 truncate text-foreground hover:underline"
                 >
                   {attachment.fileName}
@@ -104,6 +155,14 @@ export function QuestionAttachmentDropzone({
                 <span className="shrink-0 text-muted-foreground">
                   {formatSize(attachment.fileSize)}
                 </span>
+                <a
+                  href={`/api/attachments/${attachment.id}`}
+                  download
+                  className="shrink-0 text-muted-foreground transition-colors hover:text-foreground"
+                  aria-label={`Baixar ${attachment.fileName}`}
+                >
+                  <Download className="size-3.5" />
+                </a>
                 {!readOnly ? (
                   <Button
                     type="button"
@@ -168,6 +227,16 @@ export function QuestionAttachmentDropzone({
       ) : null}
 
       {error ? <p className="text-xs text-destructive">{error}</p> : null}
+
+      {/* Lightbox fullscreen para imagens */}
+      {lightboxAttachment ? (
+        <AttachmentLightbox
+          src={`/api/attachments/${lightboxAttachment.id}?inline=true`}
+          fileName={lightboxAttachment.fileName}
+          onClose={() => setLightboxAttachment(null)}
+        />
+      ) : null}
     </div>
   );
 }
+
